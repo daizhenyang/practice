@@ -1,0 +1,32 @@
+//返回结点node1和node2的最近公共祖先
+TreeNode *getLCA(TreeNode *node1, TreeNode *node2) {
+    int d1=0,d2=0;
+    TreeNode *p=node1;
+    while (p)
+    {
+        d1++;
+        p=p->parent;
+    }
+    p=node2;
+    while (p)
+    {
+        d2++;
+        p=p->parent;
+    }
+    if (d1>=d2)
+    {
+        d1-=d2;
+        while (d1--)node1=node1->parent;
+    }
+    else 
+    {
+        d2-=d1;
+        while (d2--)node2=node2->parent;
+    }
+    while (node1!=node2)
+    {
+        node1=node1->parent;
+        node2=node2->parent;
+    }
+    return node1;
+}

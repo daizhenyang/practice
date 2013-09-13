@@ -1,0 +1,48 @@
+ListNode* merge(ListNode *a,ListNode *b)
+{
+    ListNode *h=NULL,*ptr=NULL;
+    while (a&&b)
+    {
+        if (a->val<=b->val)
+        {
+            if (!h)h=ptr=a;
+            else 
+            {
+                ptr->next=a;
+                ptr=a;
+            }
+            a=a->next;
+        }
+        else 
+        {
+            if (!h)h=ptr=b;
+            else 
+            {
+                ptr->next=b;
+                ptr=b;
+            }
+            b=b->next;
+        }
+    }
+    if (a)ptr->next=a;
+    else ptr->next=b;
+    return h;
+}
+ListNode* sortLinkList(ListNode *head) {
+    int l=0;
+    ListNode *p=head;
+    while (p)
+    {
+        l++;
+        p=p->next;
+    }
+    if (l<=1)return head;
+    l/=2;l--;
+    p=head;
+    while (l--)p=p->next;
+    ListNode *t=p->next;
+    p->next=NULL;
+    head=sortLinkList(head);
+    t=sortLinkList(t);
+    return merge(head,t);
+}
